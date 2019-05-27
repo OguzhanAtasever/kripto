@@ -44,12 +44,9 @@ function xdr(method, url, params, body, endpoint, callback) {
   var httpConfig = {
     method: method,
     url: (0, _utils.buildUrl)(url, params),
-    timeout: endpoint.timeout
+    timeout: endpoint.timeout,
+    content: body
   };
-
-  if (method === 'GET') {
-    httpConfig.content = body;
-  }
 
   return (0, _http.request)(httpConfig).then(function (response) {
     status.error = false;

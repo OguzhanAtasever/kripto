@@ -16,13 +16,18 @@ class Blockchain{
         });
         this.chain.push(newBlock);
     }
-    replaceChain(chain, onSuccess){
+    replaceChain(chain, validateTransactions, onSuccess){
         if (chain.length <= this.chain.length){
             console.error('The incoming chain must be longer');
             return;
         }
         if(!Blockchain.isValidChain(chain)){
             console.error('The incoming chain must be valid');
+            return;
+        }
+
+        if(validateTransactions && !this.validTransactionData({chain})){
+            console.error('incoming chain has incalid data');
             return;
         }
 
@@ -35,6 +40,7 @@ class Blockchain{
     validTransactionData({chain}){
         for(let i=1;i<chain.length;i++){
             const block = chain[i];
+            const transactionSet = new Set();
             let rewardTransactionCount = 0;
 
             for(let transaction of block.data){
@@ -61,6 +67,12 @@ class Blockchain{
                     if(transaction.input.amount !== trueBalance){
                         console.error('Invalid input amount');
                         return false;
+                    }
+                    if(transactionSet.has(transaction)){
+                        console.error('An identical transaction appears more than once in the block');
+                        return false;
+                    }else{
+                        transactionSet.add(transaction);
                     }
 
                 }

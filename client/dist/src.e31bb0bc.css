@@ -30,3 +30,11 @@ body {
     padding: 5%;
     margin: 2%;
 }
+.Transaction {
+    padding: 5%;
+}
+
+a, a:hover {
+    color: #e66;
+    text-decoration: underline;
+}

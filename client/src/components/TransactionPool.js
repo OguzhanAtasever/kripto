@@ -4,6 +4,7 @@ import Transaction from './Transaction';
 import { Link } from 'react-router-dom';
 import history from '../history';
 
+const POLL_INTERVAL_MS = 10000;
 class TransactionPool extends Component{
     state = { transactionPoolMap: {}};
 
